@@ -27,6 +27,7 @@
 </template>
 <script>
 import db from '../firebase';
+import swal from 'sweetalert'
   export default {
     data() {
       return {
@@ -39,13 +40,20 @@ import db from '../firebase';
     },
     methods: {
       addNewTask() {
-        db.collection('kanban').add({
-          title : this.title,
-          description : this.description,
-          point : this.point,
-          assign : this.assign,
-          state: 'prelog'
-        })
+        if(this.title == '' ||this.description == '' ) {
+          swal({
+            title: 'please fill all data',
+            icon:'warning'
+          })
+        }else {
+          db.collection('kanban').add({
+            title : this.title,
+            description : this.description,
+            point : this.point,
+            assign : this.assign,
+            state: 'prelog'
+          })
+        }
       },
       resetForm() {
         this.title = ''
